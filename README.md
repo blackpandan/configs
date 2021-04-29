@@ -11,7 +11,10 @@ How to add
 - download or clone the vimrc file
 - rename the file to .vimrc
 - copy this file to the root of your laptop
-''''
+
+```
+
 $ cp .vimrc ~/
-''''
+
+```
 
