@@ -1,101 +1,100 @@
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
+set encoding=utf-8
 
-" Specify a directory for plugins
-" - For Neovim: stdpath('data') . '/plugged'
-" - Avoid using standard Vim directory names like 'plugin'
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
+" Plugins will be downloaded under the specified directory.
+call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 
-call plug#begin('~/.vim/plugged')
-
-" Make sure you use single quotes
-
-Plug 'junegunn/vim-easy-align'
-Plug 'junegunn/vim-github-dashboard'
-Plug 'tpope/vim-surround'
-Plug 'AndrewRadev/tagalong.vim'
-Plug 'alvan/vim-closetag'
-Plug 'mattn/emmet-vim'
-Plug 'posva/vim-vue'
-Plug 'leafOfTree/vim-vue-plugin'
-Plug 'JulesWang/css.vim'
-Plug 'cakebaker/scss-syntax.vim'
-Plug 'vim-python/python-syntax'
+" list of my plugins.
 Plug 'tmhedberg/SimpylFold'
 Plug 'vim-scripts/indentpython.vim'
-"Plug 'Valloric/YouCompleteMe'
 Plug 'vim-syntastic/syntastic'
 Plug 'nvie/vim-flake8'
 Plug 'jnurmine/Zenburn'
+Plug 'joshdick/onedark.vim'
+Plug 'tomasiser/vim-code-dark'
 Plug 'altercation/vim-colors-solarized'
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-fugitive'
-"Plug 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plug 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plug 'iamcco/markdown-preview.vim'
+Plug 'mattn/emmet-vim'
+Plug 'AndrewRadev/tagalong.vim'
+Plug 'tpope/vim-surround'
+Plug 'dense-analysis/ale'
+Plug 'Yggdroot/indentLine'
+Plug 'posva/vim-vue'
+Plug 'alvan/vim-closetag'
+Plug 'Valloric/YouCompleteMe'
 
-" Initialize plugin system
+" List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
-set encoding=utf-8
+autocmd FileType html setlocal ts=2 sts=2 sw=2
+autocmd FileType vue setlocal ts=2 sts=2 sw=2
+autocmd FileType javascript setlocal ts=2 sts=2 sw=2
+autocmd FileType css setlocal ts=2 sts=2 sw=2
+autocmd FileType scss setlocal ts=2 sts=2 sw=2
+autocmd FileType sass setlocal ts=2 sts=2 sw=2
+autocmd FileType python setlocal ts=4 sts=4 sw=4 tw=79 expandtab autoindent
+autocmd FileType python setlocal fileformat=unix
 
-"Enable line number
 set nu
-
-"For clipboard
 set clipboard=unnamed
+"For Python
+
+"color scheme
+if has('gui_running')
+  colorscheme codedark
+else
+  colorscheme codedark
+endif
+
+call togglebg#map("<F5>")
+
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+let python_highlight_all=1
+syntax on
+
+"python with virtualenv support
+py3 << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
 
 " Enable folding
 set foldmethod=indent
 set foldlevel=99
 
-"For color scheme
-if has('gui_running')
-  set background=dark
-  colorscheme solarized
-else
-  colorscheme zenburn
-endif
+" For Simply fold
+let g:SimpylFold_docstring_preview=1
 
-"For vim-flake
-let python_highlight_all=1
-syntax on
-
-
-"For youcomplete me
+" For youcomplete
 let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
-"python with virtualenv support
-"py << EOF
-"import os
-"import sys
-"if 'VIRTUAL_ENV' in os.environ:
-"  project_base_dir = os.environ['VIRTUAL_ENV']
-"  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-"  execfile(activate_this, dict(__file__=activate_this))
-"EOF
+"for tagalong.
+let g:tagalong_verbose = 1
 
-"FOR VUE PLUG
-let g:vim_vue_plugin_config = { 
-      \'syntax': {
-      \   'template': ['html', 'pug'],
-      \   'script': ['javascript', 'typescript', 'coffee'],
-      \   'style': ['scss', 'sass', 'less', 'stylus'],
-      \   'i18n': ['json', 'yaml'],
-      \   'route': 'json',
-      \   'docs': 'markdown',
-      \   'page-query': 'graphql',
-      \},
-      \'full_syntax': ['scss', 'html'],
-      \'initial_indent': ['script.javascript', 'style', 'yaml'],
-      \'attribute': 1,
-      \'keyword': 1,
-      \'foldexpr': 1,
-      \}
+"for ale.
+let g:ale_fixers = {
+ \ 'html': ['prettier'],
+ \ 'css': ['stylelint'],
+ \}
+let g:ale_linters = {
+ \ 'html': ['htmlhint'],
+ \ 'css': ['stylelint'],
+ \}
+let g:ale_linters_explicit = 1
+let g:ale_fix_on_save = 1
 
-"FOR VIM CLOSE TAGS
+"THIS IS FOR CLOSE TAGS
 " filenames like *.xml, *.html, *.xhtml, ...
 " These are the file extensions where this plugin is enabled.
 "
@@ -109,7 +108,7 @@ let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
 " filetypes like xml, html, xhtml, ...
 " These are the file types where this plugin is enabled.
 "
-let g:closetag_filetypes = 'html,xhtml,phtml,vue,js'
+let g:closetag_filetypes = 'html,xhtml,phtml,js,vue'
 
 " filetypes like xml, xhtml, ...
 " This will make the list of non-closing tags self-closing in the specified files.
@@ -138,13 +137,3 @@ let g:closetag_shortcut = '>'
 " Add > at current position without closing the current tag, default is ''
 "
 let g:closetag_close_shortcut = '<leader>>'
-
-autocmd Filetype html setlocal ts=2 st=2 sts=2
-autocmd Filetype css setlocal ts=2 st=2 sts=2
-autocmd Filetype javascript setlocal ts=2 st=2 sts=2
-autocmd Filetype scss setlocal ts=2 st=2 sts=2
-autocmd Filetype sass setlocal ts=2 st=2 sts=2
-autocmd Filetype vue setlocal ts=2 st=2 sts=2
-autocmd Filetype python setlocal ts=4 st=4 sts=4 tw=79 expandtab autoindent fileformat=unix
-
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
