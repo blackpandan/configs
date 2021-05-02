@@ -1,6 +1,6 @@
 Config For Vim
 --------------
-!["My Vim Setup"]("./vim.png")
+![My Vim Setup](vim.png)
 
 this is a config file for vim, it contains all my plugins it will help python devs and web developers, as most of the plugins are configured for those purposes
 
