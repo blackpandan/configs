@@ -1,0 +1,19 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+[character]
+success_symbol = "[->](bold green)"
+error_symbol = "[->](bold red)"
+
+[aws]
+disabled = true
+
+[sudo]
+disabled = false
+
+[battery]
+disabled = false
+charging_symbol = "⚡️ "
+
+[[battery.display]]
+threshold = 80
+style = "bold red"
