@@ -20,6 +20,8 @@ This repository contains all of my dotfiles as well as a bash script for the ini
 
 - for vim after installation you will need to use
   ``:PlugInstall`` after opening vim
+  
+- open up the .gitconfig in git folder and replace email and name with your own
 
 ## Info
 it install zsh, ohmyzsh, tmux, ohmytmux, and starfish
