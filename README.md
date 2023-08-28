@@ -1,14 +1,14 @@
-# Dotfiles
+# Configs
 
 This repository contains all of my dotfiles as well as a bash script for the initial setup of a new Debian, Ubuntu, or Arch Linux OS installation.
 
 ## Installation
 
 - clone folder
-  ``git clone https://github.com/blackpandan/dotfiles``
+  ``git clone https://github.com/blackpandan/configs``
 
 - change directory
-  ``cd dotfiles``
+  ``cd configs``
 
 - give script permission to run as executable
   ``chmod +x install.sh`` or
