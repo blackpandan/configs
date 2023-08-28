@@ -24,4 +24,4 @@ This repository contains all of my dotfiles as well as a bash script for the ini
 - open up the .gitconfig in git folder and replace email and name with your own
 
 ## Info
-it install zsh, ohmyzsh, tmux, ohmytmux, and starfish
+it install zsh, ohmyzsh, tmux, ohmytmux, nvm, node, pnpm and starfish
