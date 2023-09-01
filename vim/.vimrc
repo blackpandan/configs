@@ -37,6 +37,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ryanoasis/vim-devicons'
 Plug 'sheerun/vim-polyglot'
 Plug 'mxw/vim-jsx'
+Plug 'wakatime/vim-wakatime'
 
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()

@@ -20,6 +20,9 @@ This repository contains all of my dotfiles as well as a bash script for the ini
 
 - for vim after installation you will need to use
   ``:PlugInstall`` after opening vim
+
+- you will need to sign up for wakatime (here)[https://wakatime.com] ( free coding stats monitoring)
+  after signing up get API KEY restart vim and input it
   
 - open up the .gitconfig in git folder and replace email and name with your own
 
